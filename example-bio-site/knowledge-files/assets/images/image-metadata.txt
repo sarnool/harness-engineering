@@ -1,0 +1,71 @@
+
+# Marcus Vance Portfolio - Image Metadata
+
+Image descriptions below are derived from available filenames in
+knowledge-files/assets/images/ and are intended for safe portfolio use.
+
+---
+
+## Image 1 - images (1).jpg
+
+File path: knowledge-files/assets/images/images (1).jpg
+Description: General portfolio supporting visual from the current image library.
+People or subjects visible: Not specified in source metadata.
+Setting and mood: Professional digital context, neutral tone.
+Suggested pages or sections: Home hero, About intro, Contact banner.
+Alt text: Supporting visual from Marcus Vance portfolio image library.
+
+---
+
+## Image 2 - images.jpg
+
+File path: knowledge-files/assets/images/images.jpg
+Description: General portfolio supporting visual from the current image library.
+People or subjects visible: Not specified in source metadata.
+Setting and mood: Professional digital context, neutral tone.
+Suggested pages or sections: Skills overview, Experience highlights.
+Alt text: Technical themed supporting image from portfolio assets.
+
+---
+
+## Image 3 - Screenshot 2026-06-25 083843.jpg
+
+File path: knowledge-files/assets/images/Screenshot 2026-06-25 083843.jpg
+Description: Interface screenshot artifact captured on 2026-06-25.
+People or subjects visible: User interface elements only.
+Setting and mood: Product demonstration context.
+Suggested pages or sections: Projects case study visuals, Thought Leadership callouts.
+Alt text: Screenshot showing a project interface artifact from June 2026.
+
+---
+
+## Image 4 - Screenshot 2026-06-25 084058.jpg
+
+File path: knowledge-files/assets/images/Screenshot 2026-06-25 084058.jpg
+Description: Interface screenshot artifact captured on 2026-06-25.
+People or subjects visible: User interface elements only.
+Setting and mood: Product demonstration context.
+Suggested pages or sections: Projects architecture section, Skills proof points.
+Alt text: Screenshot of an engineering workflow artifact from June 2026.
+
+---
+
+## Image 5 - Screenshot 2026-06-25 084247.jpg
+
+File path: knowledge-files/assets/images/Screenshot 2026-06-25 084247.jpg
+Description: Interface screenshot artifact captured on 2026-06-25.
+People or subjects visible: User interface elements only.
+Setting and mood: Product demonstration context.
+Suggested pages or sections: Experience outcomes, Projects reliability evidence.
+Alt text: Screenshot of a technical validation artifact captured in June 2026.
+
+---
+
+## Image 6 - website_logo.png
+
+File path: knowledge-files/assets/images/website_logo.png
+Description: Brand logo used for portfolio identity and navigation.
+People or subjects visible: Logo mark only.
+Setting and mood: Clean, professional branding.
+Suggested pages or sections: Site header, footer, home hero support.
+Alt text: Marcus Vance portfolio brand logo.

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beauty Services and Prices - Bella's Beauty Salon</title>
+  <meta
+    name="description"
+    content="Browse Bella's Beauty Salon services and starting prices for hair, skin, brows, lashes, waxing, and nails in Surry Hills."
+  />
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+  <!-- HEADER PARTIAL -->
+  <header class="site-header" role="banner">
+  <div class="container site-header__inner">
+    <a href="index.html" class="site-logo" aria-label="Bella's Beauty Salon - Home">
+      Bella's Beauty Salon
+    </a>
+
+    <nav class="site-nav site-nav--sticky" id="site-nav" aria-label="Primary navigation">
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" data-page="index">Home</a></li>
+        <li><a href="services.html" data-page="services">Services</a></li>
+        <li><a href="about.html" data-page="about">About</a></li>
+        <li><a href="packages.html" data-page="packages">Packages</a></li>
+        <li><a href="visit.html" data-page="visit">Visit</a></li>
+      </ul>
+    </nav>
+
+    <a href="visit.html#booking" class="btn btn--primary nav-cta">Book Now</a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label="Open navigation menu"
+      data-nav-toggle
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+  <main>
+    <section class="hero hero--split" id="services-top">
+      <div class="container hero__grid">
+        <div class="hero__text" data-reveal>
+          <span class="eyebrow">Services and pricing</span>
+          <h1>Beauty services with clear starting prices.</h1>
+          <p class="hero__lead">
+            Choose from hair, skin, brow, lash, waxing, and nail appointments, with specialty colour work and premium treatments available.
+          </p>
+          <div class="hero__actions">
+            <a href="visit.html#booking" class="btn btn--primary">Book a Service</a>
+            <a href="packages.html" class="btn btn--ghost">View Packages</a>
+          </div>
+        </div>
+        <div class="hero__media" data-reveal>
+          <picture>
+            <source srcset="assets/images/hair_colouring.avif" type="image/avif" />
+            <img
+              src="assets/images/hair_colouring.jpg"
+              alt="Hairstylist applying colour to a client's hair in a modern salon."
+            />
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-cards section-padding" id="service-categories">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <span class="eyebrow">What you can book</span>
+            <h2>Choose a category, then pick the service that fits your visit.</h2>
+          </div>
+          <p>
+            Prices are listed as starting prices. Colour transformations and extensions may need a consultation first.
+          </p>
+        </div>
+
+        <div class="cards-grid" data-reveal>
+          <article class="card">
+            <span class="card__tag">Hair services</span>
+            <h3>Cut, style, colour and smoothing</h3>
+            <ul class="card__list" role="list">
+              <li>Women's haircut and blow dry from $75</li>
+              <li>Men's haircut from $45</li>
+              <li>Kids' haircut from $35</li>
+              <li>Blow dry and style from $55</li>
+              <li>Full head colour from $150</li>
+              <li>Highlights or balayage from $180</li>
+              <li>Toning or gloss treatment from $80</li>
+              <li>Keratin smoothing treatment from $250</li>
+              <li>Hair extensions from $300 after consultation</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Skin and facial treatments</span>
+            <h3>Express refresh through to treatment-focused care</h3>
+            <ul class="card__list" role="list">
+              <li>Express facial from $65</li>
+              <li>Signature facial from $110</li>
+              <li>Deep cleansing facial from $120</li>
+              <li>LED light therapy from $75</li>
+              <li>Microdermabrasion from $130</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Brows and lashes</span>
+            <h3>Shape, tint, lift, and extension appointments</h3>
+            <ul class="card__list" role="list">
+              <li>Eyebrow wax and shape from $25</li>
+              <li>Eyebrow tint from $20</li>
+              <li>Lash tint from $30</li>
+              <li>Brow and lash tint combo from $45</li>
+              <li>Lash lift from $85</li>
+              <li>Classic lash extensions from $120</li>
+              <li>Infills from $65</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Waxing</span>
+            <h3>From targeted maintenance to full body appointments</h3>
+            <ul class="card__list" role="list">
+              <li>Half leg wax from $40</li>
+              <li>Full leg wax from $65</li>
+              <li>Underarm wax from $25</li>
+              <li>Bikini wax from $35</li>
+              <li>Brazilian wax from $60</li>
+              <li>Full body wax from $180</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Nails</span>
+            <h3>Classic finishes, gels, and add-on nail art</h3>
+            <ul class="card__list" role="list">
+              <li>Manicure from $45</li>
+              <li>Gel manicure from $65</li>
+              <li>Pedicure from $55</li>
+              <li>Gel pedicure from $75</li>
+              <li>Nail art from $5 per nail</li>
+              <li>Nail removal from $30</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Before you book</span>
+            <h3>Consultations, timing, and payments</h3>
+            <ul class="card__list" role="list">
+              <li>Major colour changes should start with a consultation.</li>
+              <li>A basic haircut is about 45 minutes.</li>
+              <li>Full colour with highlights can take 2 to 3 hours.</li>
+              <li>Cash, card, and contactless are all accepted with no card surcharge.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-marquee" aria-label="Products and retail brands">
+      <div class="marquee-track">
+        <span>Kerastase</span>
+        <span>Dermalogica</span>
+        <span>OPI</span>
+        <span>Professional salon products</span>
+        <span>In-store recommendations</span>
+        <span>Retail products available</span>
+        <span>Kerastase</span>
+        <span>Dermalogica</span>
+        <span>OPI</span>
+        <span>Professional salon products</span>
+        <span>In-store recommendations</span>
+        <span>Retail products available</span>
+      </div>
+    </section>
+
+    <section class="section-list section-padding" id="booking-details">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <span class="eyebrow">Booking details</span>
+            <h2>Know how bookings, walk-ins, and changes work before you arrive.</h2>
+          </div>
+          <p>
+            You can book online, call during business hours, or try a walk-in. Weekends are busiest, so booking ahead is a smart move.
+          </p>
+        </div>
+
+        <div class="section-list__grid" data-reveal>
+          <article class="detail-card stack">
+            <h3>Ways to book</h3>
+            <ul class="detail-list" role="list">
+              <li>Online through the website's Book Now button.</li>
+              <li>By phone during business hours.</li>
+              <li>Walk-ins are welcome when time is available.</li>
+            </ul>
+          </article>
+          <article class="detail-card stack">
+            <h3>Changes and cancellations</h3>
+            <ul class="detail-list" role="list">
+              <li>Please give at least 24 hours notice to cancel or reschedule.</li>
+              <li>Late cancellations may incur a small fee.</li>
+              <li>Time estimates are provided when you book.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-cta section-padding" id="services-cta">
+      <div class="container">
+        <div class="section-cta__panel" data-reveal>
+          <span class="eyebrow">Make it a full visit</span>
+          <h2>Pair a service with a package or membership to get more from your appointment.</h2>
+          <p>
+            The Works Package, the Bride-to-Be Package, and the monthly membership all give regular clients an easy upgrade path.
+          </p>
+          <div class="hero__actions">
+            <a href="visit.html#booking" class="btn btn--primary">Book a Service</a>
+            <a href="packages.html" class="btn btn--ghost">See Packages</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER PARTIAL -->
+  <footer class="site-footer site-footer--full" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo">Bella's Beauty Salon</a>
+        <p>
+          A friendly, relaxed Surry Hills salon for hair, skin, brows, lashes, nails,
+          and full pamper sessions.
+        </p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h3 class="footer-nav__heading">Pages</h3>
+        <ul role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="visit.html">Visit</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-contact">
+        <h3 class="footer-contact__heading">Contact</h3>
+        <ul class="footer-contact__list" role="list">
+          <li><a href="tel:0291234567">(02) 9123 4567</a></li>
+          <li><a href="mailto:hello@bellasbeauty.com.au">hello@bellasbeauty.com.au</a></li>
+          <li>Shop 4, 22 Rose Street, Surry Hills NSW 2010</li>
+          <li>Instagram: @bellasbeautysalon</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        &copy; <span data-year></span> Bella's Beauty Salon. All rights reserved.
+      </p>
+      <a href="https://www.bellasbeauty.com.au" target="_blank" rel="noopener noreferrer">
+        www.bellasbeauty.com.au
+      </a>
+    </div>
+  </div>
+</footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

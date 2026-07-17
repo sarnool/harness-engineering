@@ -1,157 +1,121 @@
-# AGENTS.md
+# Website Builder Harness — Orchestration
 
-## Purpose
-This file is the root-level harness for GitHub Copilot Agent Mode.
-It defines all rules, conventions, and workflows for building and maintaining
-this school website. Read this file before doing anything else.
+This file is the mandatory workflow controller. The agent must follow every stage in order. Do not skip stages. Do not write any output files before completing Stages 1–3 and passing the human checkpoint.
 
 ---
 
-## Core Philosophy
+## Mandatory Build Workflow
 
-You are acting as an experienced web designer and developer specialising in school websites. You make all structural and design decisions — the developer provides only raw knowledge and photos.
-
-- You decide what pages to create based on the knowledge base.
-- You decide how to group and structure the navigation.
-- You decide which photos to use on which pages.
-- You always propose and explain before generating code.
-- You never ask the developer to define structure, pages, or menus.
-
----
-
-## Knowledge Base
-
-All content for this website lives in the `knowledge/` folder as plain text files.
-Before doing any work, read every file in `knowledge/`.
-
-### Rules
-1. Read the entire knowledge base before making any decisions.
-2. Never invent facts, names, dates, or details not present in the knowledge files.
-3. If information needed for a section is missing, insert a `<!-- TODO: [description] -->`
-   comment in the HTML rather than fabricating content.
-4. When new knowledge files are added, re-read the full knowledge base before deciding
-   how to incorporate the new content.
+```
+Stage 1  → Content Analysis        (skills/content-analyst.md)
+Stage 2a → Image Intelligence      (skills/image-analyst.md)
+Stage 2b → Brand Inference         (skills/brand-inference.md)
+Stage 2c → Site Architecture       (skills/site-architect.md)
+Stage 2d → Section Architecture    (skills/section-architecture.md)
+Stage 2e → Component Selection     (skills/component-library.md)
+── HUMAN CHECKPOINT ──
+Stage 3a → Project Scaffolding     (skills/html-engineer.md § Scaffolding)
+Stage 3b → Partials Generation     (skills/partials-manager.md)
+Stage 3c → Shared CSS Generation   (skills/html-engineer.md § CSS)
+Stage 3d → Shared JS Generation    (skills/html-engineer.md § JS)
+Stage 3e → Page Generation         (skills/html-engineer.md § Pages)
+Stage 4  → Validation              (skills/html-engineer.md § Validation)
+```
 
 ---
 
-## Photo Metadata
+## Stage Descriptions
 
-### Generating Metadata
-When asked to scan photos:
-1. Examine every image file in `assets/images/` and all subfolders.
-2. For each photo generate a metadata entry capturing:
-   - File path
-   - What is in the photo (people, objects, setting)
-   - The mood or tone (formal, candid, celebratory, academic)
-   - Suggested pages or sections where this photo is most appropriate
-   - A ready-to-use alt text for the HTML img tag
-3. Save all metadata to `knowledge/image-metadata.txt`.
-4. Never ask the developer to describe photos — always scan and decide yourself.
+### Stage 1 — Content Analysis
+Load `skills/content-analyst.md`. Read all files in `knowledge-files/`. Produce a **Content Brief** covering: entity type, audience, tone signals, content inventory, and priority message.
 
-### Using Photos in Pages
-1. Always read `knowledge/image-metadata.txt` before building or updating any page.
-2. Select the most contextually relevant photo for each section.
-3. Prefer photos that match the topic, mood, and audience of the section.
-4. Never reference a photo that does not exist in `assets/images/`.
-5. Never leave a page without at least one relevant photo if one is available.
-6. Always use the alt text recorded in `knowledge/image-metadata.txt`.
+### Stage 2a — Image Intelligence
+Load `skills/image-analyst.md`.
+- Check if `knowledge-files/assets/images/image-metadata.txt` exists.
+  - **If YES:** Read the metadata file. Extract file paths, descriptions, moods, and suggested pages for each image.
+  - **If NO:** Scan all files in `knowledge-files/assets/images/`. For each image, infer description, mood, people, setting, and suggested pages from the filename and content context. Write a new `image-metadata.txt` to that folder using the standard schema defined in `skills/image-analyst.md`. Confirm to the user that the metadata file has been created before proceeding.
+- Produce an **Image Assignment Map**: a list of which images will be used in which sections and why.
 
-### When New Photos Are Added
-Read only the new or unrecognised files and append their metadata to `knowledge/image-metadata.txt` without overwriting existing entries.
+### Stage 2b — Brand Inference
+Load `skills/brand-inference.md`. Using the Content Brief and Image Assignment Map, produce a **Design Token Set**: colour palette, typography, spacing scale, border radius, and animation style.
 
----
+### Stage 2c — Site Architecture
+Load `skills/site-architect.md`. Using the Content Brief, decide:
+- Whether the site is **simple** (single page) or **complex** (multi-page)
+- If multi-page: which pages to create, what content goes on each, and how they link together
+- Produce a **Site Map** listing every page with its filename, title, nav label, and content sections
 
-## Site Structure Decisions
+### Stage 2d — Section Architecture
+Load `skills/section-architecture.md`. For **each page** in the Site Map, produce a **Section Blueprint**: an ordered list of sections, the content that populates each, and which image (if any) is assigned to each section.
 
-### What pages to create
-1. Read every file in `knowledge/`.
-2. Identify all distinct topics that warrant their own page.
-3. Apply industry best practice for what a school website typically covers.
-4. Consider what parents, students, and prospective families need to find easily.
-5. Propose the full page list with reasoning before creating any files.
-
-### Navigation structure
-1. Group pages into logical, intuitive navigation based on content and best practice.
-2. Apply these professional principles:
-   - 5 to 7 top-level items maximum
-   - Maximum 2 levels deep (top-level + one submenu)
-   - Most-visited pages (contact, enrolments) are always easy to reach
-   - Use plain language that parents immediately understand
-   - Home is always first
-3. Propose the navigation structure with reasoning before generating any code.
-4. Follow the full navigation skill defined in `.github/skills/navigation.md`.
-
-### When a new knowledge file is added
-1. Read the new file and understand what it is about.
-2. Decide if it needs its own page or belongs within an existing page.
-3. Decide where it sits in the navigation.
-4. Propose and explain. Wait for approval. Then update all affected pages.
+### Stage 2e — Component Selection
+Load `skills/component-library.md`. For each section across all pages, select the appropriate named component variant.
 
 ---
 
-## Tech Stack
+## Human Checkpoint
 
-- HTML5 semantic elements only — no frameworks, no build tools, no npm
-- CSS3 — single shared stylesheet: `css/styles.css`
-- Vanilla JavaScript only — single file: `js/main.js`
-- No external libraries, no CDN imports, no inline styles
+Before writing any files, present the following to the user for review:
+1. Content Brief (summary)
+2. Image Assignment Map
+3. Design Token Set
+4. Site Map (pages, filenames, nav labels)
+5. Section Blueprint per page with component selections
 
----
+Ask: *"Does this plan look right? Any changes before I build?"*
 
-## Coding Standards
-
-### HTML
-1. Always use semantic elements: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`. Never use `<div>` where a semantic tag exists.
-2. Every page must include:
-   - `<!DOCTYPE html>` and `<html lang="en">`
-   - `<meta charset="UTF-8">` and viewport meta tag
-   - Link to `css/styles.css`
-   - Link to `js/main.js`
-   - A shared layout shell for the header, navigation, and footer
-3. Prefer a single shared template or include-based approach for the repeated site shell so the header, navigation, and footer are defined once and reused across all pages.
-4. Every `<img>` must have a descriptive `alt` attribute.
-5. File names: lowercase, hyphenated (e.g. `about-us.html`, `contact.html`).
-
-### CSS
-1. All styles go in `css/styles.css` — never inline.
-2. Use CSS custom properties (variables) for colors, fonts, and breakpoints.
-3. Use Flexbox or Grid for all layouts — no floats, no tables for layout.
-4. Mobile-first: write base styles for mobile, use `min-width` media queries
-   to scale up to desktop.
-5. Navigation CSS must use only structural selectors — never hardcode menu
-   item names, counts, or labels in CSS rules.
-
-### JavaScript
-1. All JavaScript goes in `js/main.js` — never inline.
-2. Use class-based selectors only — never reference specific menu item names.
-3. Use `addEventListener` — never use inline `onclick` attributes.
-4. Keep JS minimal — prefer CSS-only solutions where possible.
+Only proceed to Stage 3 after explicit user confirmation.
 
 ---
 
-## Accessibility
+### Stage 3a — Project Scaffolding
+Load `skills/html-engineer.md § Scaffolding`. Create the full output folder structure before writing any file content.
 
-1. All navigation must include `aria-label` and `aria-expanded` attributes
-   on interactive elements.
-2. Ensure sufficient color contrast (WCAG AA minimum).
-3. Heading hierarchy must be logical: one `<h1>` per page, followed by
-   `<h2>`, `<h3>` in order — never skip levels.
-4. All form inputs must have associated `<label>` elements.
+### Stage 3b — Partials Generation
+Load `skills/partials-manager.md`. Generate `partials/header.html` and `partials/footer.html`. These are generated once and referenced by every page. Do not duplicate header or footer content inside individual page files.
+
+### Stage 3c — Shared CSS Generation
+Load `skills/html-engineer.md § CSS`. Generate `assets/css/main.css` containing all design tokens, base styles, layout utilities, and component styles. No page file may contain a `<style>` block.
+
+### Stage 3d — Shared JS Generation
+Load `skills/html-engineer.md § JS`. Generate `assets/js/main.js` containing all interactive behaviour. No page file may contain a `<script>` block or inline event handlers.
+
+### Stage 3e — Page Generation
+Load `skills/html-engineer.md § Pages`. Generate each `.html` page file per the Site Map. Each page links to the shared CSS and JS, and assembles the header and footer partials via the include pattern defined in `skills/partials-manager.md`.
+
+### Stage 4 — Validation
+Run the full validation checklist in `skills/html-engineer.md § Validation` across all generated files before delivering output.
 
 ---
 
-## Page Building
+## Output File Locations
 
-When building or updating any page, follow the full page building skill
-defined in `.github/skills/page-builder.md`.
+| Purpose | Path |
+|---|---|
+| Knowledge files | `knowledge-files/` |
+| Image assets | `knowledge-files/assets/images/` |
+| Image metadata | `knowledge-files/assets/images/image-metadata.txt` |
+| Generated pages | `output/` |
+| Shared CSS | `output/assets/css/main.css` |
+| Shared JS | `output/assets/js/main.js` |
+| Partials | `output/partials/header.html` `output/partials/footer.html` |
+| Build state | `STATUS.md` |
+| Decision log | `DECISIONS.md` |
 
 ---
 
-## Workflow Rules
+## Source File Locations
 
-1. Always read the knowledge base and image metadata before starting any task.
-2. Always propose structure, pages, or navigation changes with reasoning
-   before generating code.
-3. Never make structural changes silently — always explain what you are doing and why.
-4. When regenerating navigation, update the shared layout template so all pages inherit the change consistently.
-5. When a page is active, add `class="active"` to its matching `<a>` tag in the nav.
+| Purpose | Path |
+|---|---|
+| Knowledge files | `knowledge-files/` |
+| Image assets | `knowledge-files/assets/images/` |
+| Image metadata | `knowledge-files/assets/images/image-metadata.txt` |
+| Build state | `STATUS.md` |
+| Decision log | `DECISIONS.md` |
+
+---
+
+## Entry Points
+
+Use prompts from `PROMPTS.md`. Do not begin a build without a valid entry-point prompt.
