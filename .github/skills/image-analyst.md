@@ -5,9 +5,9 @@ Read image assets and metadata to produce an Image Assignment Map that tells the
 
 ---
 
-## Step 1 — Metadata Check
+## Step 1 — Metadata Reconciliation
 
-Check for the existence of `knowledge-files/assets/images/image-metadata.txt`.
+Always re-scan `knowledge-files/assets/images/` and reconcile metadata before producing assignments.
 
 ### If metadata EXISTS:
 Read the file. For each image entry, extract:
@@ -18,6 +18,32 @@ Read the file. For each image entry, extract:
 - `Suggested pages` — the pages/sections the image is recommended for
 - `Alt text` — use verbatim in the `alt` attribute
 
+Then compare metadata entries to actual files in `knowledge-files/assets/images/`:
+- Detect **new image files** that are not present in any `File path` in metadata.
+- Process only those new files. Do not bulk-optimize files that are already tracked.
+- Reconciliation guardrail: if `photo.ext` is not in metadata but `photo_optimized.ext` exists and is already in metadata, treat `photo.ext` as already handled and do not process it again.
+
+For each new image file:
+1. Determine if already optimized:
+    - File stem ends with `_optimized`, or
+    - It already satisfies web constraints (within max dimensions and compact file size).
+   - If a sibling `_optimized` file exists and is in metadata, skip the original source file.
+2. If not optimized, create a new file named `<original_stem>_optimized<original_ext>` in the same folder using the local tool:
+
+```bash
+python .github/tools/optimize_images.py \
+   --source-dir knowledge-files/assets/images \
+   --files [new-file-name.ext] \
+   --output-dir knowledge-files/assets/images \
+   --preserve-input-format \
+   --suffix _optimized \
+   --skip-if-optimized
+```
+
+3. Add metadata entry for the new image using the optimized filename in `File path`.
+4. If the tool reports the file is already optimized, keep the original filename in metadata.
+5. Never add both `photo.ext` and `photo_optimized.ext` as separate metadata entries for the same source image. Prefer a single canonical metadata entry for the optimized file.
+
 ### If metadata DOES NOT EXIST:
 1. Scan all files in `knowledge-files/assets/images/`
 2. For each image file found, infer the following from the filename and the Content Brief:
@@ -27,8 +53,10 @@ Read the file. For each image entry, extract:
    - **Mood:** Infer from setting and brand context
    - **Suggested pages:** Infer from content inventory in the Content Brief
    - **Alt text:** Generate a descriptive alt text from the inferred description
-3. Write a new `image-metadata.txt` to `knowledge-files/assets/images/` using the schema below
-4. Notify the user: *"No image metadata found. I've scanned the images folder and created a metadata file at `knowledge-files/assets/images/image-metadata.txt`. Please review and correct any entries marked `Unverified` before the next build."*
+3. Before writing metadata, optimize only files that are not already optimized using the same `_optimized` naming rule above.
+4. Use optimized filenames in `File path` when an optimized copy is created.
+5. Write a new `image-metadata.txt` to `knowledge-files/assets/images/` using the schema below
+6. Notify the user: *"No image metadata found. I've scanned the images folder and created a metadata file at `knowledge-files/assets/images/image-metadata.txt`. Please review and correct any entries marked `Unverified` before the next build."*
 
 ---
 

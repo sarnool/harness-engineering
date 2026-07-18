@@ -28,13 +28,18 @@ SUPPORTED_INPUT_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
 class OptimizationConfig:
     source_dir: Path
     output_dir: Path
+    files: tuple[str, ...]
     recursive: bool
     max_width: int
     max_height: int
     jpeg_quality: int
+    png_compress_level: int
     webp_quality: int
     avif_quality: int
     formats: tuple[str, ...]
+    preserve_input_format: bool
+    suffix: str
+    skip_if_optimized: bool
     overwrite: bool
 
 
@@ -50,11 +55,25 @@ def parse_formats(raw: str) -> tuple[str, ...]:
     if not normalized:
         raise ValueError("At least one output format is required.")
 
-    allowed = {"jpg", "webp", "avif"}
+    allowed = {"jpg", "png", "webp", "avif"}
     invalid = [fmt for fmt in normalized if fmt not in allowed]
     if invalid:
         raise ValueError(f"Unsupported format(s): {', '.join(invalid)}")
     return normalized
+
+
+def normalize_input_format(file_suffix: str) -> str:
+    suffix = file_suffix.lower()
+    mapping = {
+        ".jpg": "jpg",
+        ".jpeg": "jpg",
+        ".png": "png",
+        ".webp": "webp",
+        ".avif": "avif",
+    }
+    if suffix not in mapping:
+        raise ValueError(f"Unsupported input format for preserve mode: {file_suffix}")
+    return mapping[suffix]
 
 
 def is_avif_writable() -> bool:
@@ -69,7 +88,20 @@ def is_avif_writable() -> bool:
         return False
 
 
-def iter_images(source_dir: Path, recursive: bool) -> Iterable[Path]:
+def iter_images(source_dir: Path, recursive: bool, files: tuple[str, ...]) -> Iterable[Path]:
+    if files:
+        for file_name in files:
+            path = (source_dir / file_name).resolve()
+            try:
+                path.relative_to(source_dir.resolve())
+            except ValueError:
+                continue
+            if not path.is_file():
+                continue
+            if path.suffix.lower() in SUPPORTED_INPUT_EXTENSIONS:
+                yield path
+        return
+
     pattern = "**/*" if recursive else "*"
     for path in sorted(source_dir.glob(pattern)):
         if not path.is_file():
@@ -106,6 +138,15 @@ def save_variant(image: Image.Image, out_path: Path, fmt: str, config: Optimizat
         image.save(out_path, format="WEBP", quality=config.webp_quality, method=6)
         return
 
+    if fmt == "png":
+        image.save(
+            out_path,
+            format="PNG",
+            optimize=True,
+            compress_level=config.png_compress_level,
+        )
+        return
+
     if fmt == "avif":
         if not is_avif_writable():
             raise RuntimeError(
@@ -117,21 +158,68 @@ def save_variant(image: Image.Image, out_path: Path, fmt: str, config: Optimizat
     raise RuntimeError(f"Unknown format '{fmt}'.")
 
 
+def is_likely_optimized_source(
+    image_path: Path,
+    image: Image.Image,
+    max_width: int,
+    max_height: int,
+    optimized_suffix: str,
+) -> bool:
+    if optimized_suffix and image_path.stem.lower().endswith(optimized_suffix.lower()):
+        return True
+
+    width, height = image.size
+    if width > max_width or height > max_height:
+        return False
+
+    size_bytes = image_path.stat().st_size
+    ext = image_path.suffix.lower()
+    thresholds = {
+        ".avif": 900 * 1024,
+        ".webp": 900 * 1024,
+        ".jpg": 650 * 1024,
+        ".jpeg": 650 * 1024,
+        ".png": 950 * 1024,
+    }
+    limit = thresholds.get(ext)
+    if limit is None:
+        return False
+    return size_bytes <= limit
+
+
 def optimize_one(image_path: Path, config: OptimizationConfig) -> str:
     relative = image_path.relative_to(config.source_dir)
     stem_output_dir = config.output_dir / relative.parent
 
     with Image.open(image_path) as src:
+        if config.skip_if_optimized and is_likely_optimized_source(
+            image_path,
+            src,
+            config.max_width,
+            config.max_height,
+            config.suffix,
+        ):
+            return f"SKIPPED (already optimized): {relative}"
+
         optimized = get_resized_image(src, config.max_width, config.max_height)
 
-        for fmt in config.formats:
+        target_formats = config.formats
+        if config.preserve_input_format:
+            target_formats = (normalize_input_format(image_path.suffix),)
+
+        wrote_any = False
+        for fmt in target_formats:
             suffix = ".jpg" if fmt == "jpg" else f".{fmt}"
-            out_path = stem_output_dir / f"{image_path.stem}{suffix}"
+            out_path = stem_output_dir / f"{image_path.stem}{config.suffix}{suffix}"
 
             if out_path.exists() and not config.overwrite:
                 continue
 
             save_variant(optimized, out_path, fmt, config)
+            wrote_any = True
+
+    if not wrote_any:
+        return f"SKIPPED (outputs exist): {relative}"
 
     return str(relative)
 
@@ -150,6 +238,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Folder containing original images.",
     )
     parser.add_argument(
+        "--files",
+        nargs="*",
+        default=[],
+        help="Optional file names (relative to source-dir) to process.",
+    )
+    parser.add_argument(
         "--output-dir",
         type=Path,
         help="Output folder. Defaults to source-dir.",
@@ -162,12 +256,28 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-width", type=int, default=1920)
     parser.add_argument("--max-height", type=int, default=1920)
     parser.add_argument("--jpeg-quality", type=int, default=82)
+    parser.add_argument("--png-compress-level", type=int, default=9)
     parser.add_argument("--webp-quality", type=int, default=80)
     parser.add_argument("--avif-quality", type=int, default=50)
     parser.add_argument(
         "--formats",
         default="jpg,webp,avif",
-        help="Comma-separated output formats. Allowed: jpg,webp,avif",
+        help="Comma-separated output formats. Allowed: jpg,png,webp,avif",
+    )
+    parser.add_argument(
+        "--preserve-input-format",
+        action="store_true",
+        help="Write output using the input file format only.",
+    )
+    parser.add_argument(
+        "--suffix",
+        default="",
+        help="Suffix appended to output file stem, e.g. _optimized.",
+    )
+    parser.add_argument(
+        "--skip-if-optimized",
+        action="store_true",
+        help="Skip files that already appear optimized based on size/dimensions.",
     )
     parser.add_argument(
         "--overwrite",
@@ -197,33 +307,44 @@ def main() -> int:
     config = OptimizationConfig(
         source_dir=source_dir,
         output_dir=output_dir,
+        files=tuple(args.files),
         recursive=args.recursive,
         max_width=args.max_width,
         max_height=args.max_height,
         jpeg_quality=args.jpeg_quality,
+        png_compress_level=args.png_compress_level,
         webp_quality=args.webp_quality,
         avif_quality=args.avif_quality,
         formats=formats,
+        preserve_input_format=args.preserve_input_format,
+        suffix=args.suffix,
+        skip_if_optimized=args.skip_if_optimized,
         overwrite=args.overwrite,
     )
 
     stats = RunStats()
 
-    for image_path in iter_images(config.source_dir, config.recursive):
+    for image_path in iter_images(config.source_dir, config.recursive, config.files):
         try:
             rel = optimize_one(image_path, config)
-            print(f"Optimized: {rel}")
-            stats.processed += 1
+            if rel.startswith("SKIPPED"):
+                print(rel)
+                stats.skipped += 1
+            else:
+                print(f"Optimized: {rel}")
+                stats.processed += 1
         except Exception as exc:  # pragma: no cover - command line behavior
             print(f"Failed: {image_path} ({exc})", file=sys.stderr)
             stats.failed += 1
 
-    if stats.processed == 0 and stats.failed == 0:
+    if stats.processed == 0 and stats.skipped == 0 and stats.failed == 0:
         print("No supported images found.")
         return 0
 
     print(
-        f"Done. Processed: {stats.processed}, Failed: {stats.failed}, Output: {config.output_dir}"
+        "Done. "
+        f"Processed: {stats.processed}, Skipped: {stats.skipped}, Failed: {stats.failed}, "
+        f"Output: {config.output_dir}"
     )
     return 1 if stats.failed else 0
 

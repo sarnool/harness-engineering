@@ -74,7 +74,7 @@ The harness is made up of **8 "skills"** that Copilot loads at each stage of the
 
 Stage 1   content-analyst.md       Reads your text. Extracts tone, audience, and key messages.
 
-Stage 2a  image-analyst.md         Scans images. Decides which image goes where and why.
+Stage 2a  image-analyst.md         Re-scans images, reconciles metadata, optimizes only new files, then assigns images.
 
 Stage 2b  brand-inference.md       Translates your content tone into colors, fonts, and spacing.
 
@@ -111,6 +111,7 @@ website-builder-harness/
 │
 ├── .github/
 │   └── skills/                    ← The 8 skill files loaded by Copilot
+│   └── tools/                     ← Local helper scripts (for example image optimization)
 │
 ├── knowledge-files/               ← 📥 DROP YOUR CONTENT HERE
 │   ├── my-business.txt
@@ -128,6 +129,12 @@ website-builder-harness/
 ### Prerequisites
 *   **VS Code** with the **GitHub Copilot** extension installed.
 *   **GitHub Copilot Agent Mode** enabled in your chat settings.
+*   **Python 3.10+** for helper scripts.
+
+Optional for local image optimization helper:
+```bash
+pip install pillow pillow-avif-plugin
+```
 
 ---
 
@@ -154,7 +161,13 @@ Create a plain text file (e.g., `my-business.txt`) in the `knowledge-files/` fol
 ### Step 3 — Add Your Images
 Drop your JPGs or PNGs into `knowledge-files/assets/images/`. 
 
-*Don't worry about cataloging them.* The harness will scan your folder and automatically write descriptions for them on its first run.
+*Don't worry about cataloging them.* The harness scans and reconciles this folder during Stage 2a. If metadata exists, it detects newly added files, optimizes only those new files when needed, and updates metadata to use the optimized filename.
+
+Optimization behavior for newly added images:
+*   The original and optimized files can stay in the same folder.
+*   New optimized files are written as `<original_stem>_optimized<original_ext>`.
+*   Metadata keeps one canonical entry (prefer optimized file path when generated).
+*   Already tracked images are not bulk re-optimized.
 
 ---
 
@@ -236,6 +249,7 @@ Once your site is built, you can easily ask Copilot to make adjustments. Copy an
 | --- | --- |
 | **Add a new page** | `Add a new [page name] page to the site following our harness design rules.` |
 | **Add a section** | `Add a [testimonial/pricing/etc] section to output/[page-name].html.` |
+| **Sync new images** | `Re-scan knowledge-files/assets/images and reconcile with image-metadata.txt. Detect only newly added image files, optimize only if needed, and update metadata paths without reprocessing tracked files.` |
 | **Change colors** | `Update the Design Token Set in output/assets/css/main.css to use a [cool blue / dark mode / warm earth] theme.` |
 | **Update text** | `I have updated the knowledge file. Update the website's content to reflect the changes.` |
 

@@ -1,73 +1,73 @@
-# Bella's Beauty Salon - Image Metadata
+# Root Build - Image Metadata
 
-## Image 1 - Salon Interior Hero
-File path: knowledge-files/assets/images/salon_interior_hero.jpg
-Description: A polished salon interior with statement mirrors, warm light, and a seating area that signals comfort as well as professionalism.
-People: None
-Setting: Indoor beauty salon with an elevated fit-out
-Mood: Warm, welcoming, polished
-Suggested pages: Home hero, About highlights, Contact visit section
-Alt text: Elegant beauty salon interior with mirrors, lounge seating, and warm lighting.
+## Image 1 - Backwash Area
+File path: knowledge-files/assets/images/backwash_area.jpg
+Description: A modern salon backwash station with reclining wash chairs and a clean, organised setup.
+People: Unverified
+Setting: Indoor salon backwash and rinse area
+Mood: Professional, clean, relaxing
+Suggested pages: Services section, Contact visit section
+Alt text: Modern salon backwash area with reclining wash chairs and a clean interior.
 
-## Image 2 - Salon Tools and Workspace
-File path: knowledge-files/assets/images/salon_tools.avif
-Description: A neatly arranged styling station with tools and products laid out in an orderly, ready-for-service setup.
-People: None
-Setting: Salon workstation
-Mood: Organised, professional, prepared
-Suggested pages: Services page, Home highlights
-Alt text: Salon styling tools and products arranged neatly on a workstation.
+## Image 2 - Hair Colouring Service
+File path: knowledge-files/assets/images/hair_colouring_optimized.jpg
+Description: A stylist performing a hair colouring treatment for a salon client in a service chair.
+People: Unverified
+Setting: Indoor salon styling chair area
+Mood: Skilled, attentive, polished
+Suggested pages: Home hero, Services section, Packages section
+Alt text: Hairstylist applying hair colour to a client in a salon chair.
 
-## Image 3 - Hair Colouring Service AVIF
-File path: knowledge-files/assets/images/hair_colouring.avif
-Description: A stylist applying colour with care, focusing on precision and the client experience.
-People: Two women, one stylist and one client
-Setting: Modern salon chair area
-Mood: Skilled, attentive, style-focused
-Suggested pages: Services page, Packages page
-Alt text: Hairstylist applying colour to a client's hair in a modern salon.
+## Image 3 - Facial and Spa Treatment
+File path: knowledge-files/assets/images/facial_spa_treatment.jpg
+Description: A wellness-focused facial treatment scene that highlights calm care and spa-quality service.
+People: Unverified
+Setting: Indoor spa treatment room
+Mood: Calm, restorative, caring
+Suggested pages: Packages section, Home highlights
+Alt text: Facial spa treatment scene in a calm, professional salon setting.
 
-## Image 4 - Hair Colouring Service JPG
-File path: knowledge-files/assets/images/hair_colouring.jpg
-Description: An alternate version of the hair colouring service image that shows a stylist working carefully through a colour appointment.
-People: Two women, one stylist and one client
-Setting: Modern salon chair area
-Mood: Skilled, attentive, style-focused
-Suggested pages: About page, Contact page
-Alt text: Stylist applying hair colour during a salon appointment.
+## Image 4 - Hair Colouring Service AVIF
+File path: knowledge-files/assets/images/hair_colouring_optimized.avif
+Description: A stylist applying colour with precision during an in-chair salon treatment.
+People: Unverified
+Setting: Indoor salon styling chair area
+Mood: Skilled, attentive, polished
+Suggested pages: Services section, Packages section
+Alt text: Hairstylist applying colour treatment to a client in a salon chair.
 
 ## Image 5 - Nail Treatment
-File path: knowledge-files/assets/images/nail_treatment.avif
-Description: A close salon treatment moment focused on careful nail work and one-to-one service.
-People: Two people, a nail technician and a client
-Setting: Nail treatment station
+File path: knowledge-files/assets/images/nail_treatment_optimized.avif
+Description: A close salon service moment focused on careful nail treatment and client care.
+People: Unverified
+Setting: Indoor nail service station
 Mood: Calm, detailed, caring
-Suggested pages: Services page, Packages page
-Alt text: Nail technician performing a manicure treatment for a salon client.
+Suggested pages: Services section, Packages section
+Alt text: Nail treatment service being performed in a salon workstation.
 
-## Image 6 - Backwash Area
-File path: knowledge-files/assets/images/backwash_area.jpg
-Description: A clean, modern wash area with reclining chairs that reinforces the salon's comfort and finish standards.
-People: None
-Setting: Backwash and rinse area inside the salon
-Mood: Relaxing, fresh, professional
-Suggested pages: Contact page, Services page
-Alt text: Modern salon backwash area with reclining wash chairs.
+## Image 6 - Salon Interior Hero
+File path: knowledge-files/assets/images/salon_interior_hero_optimized.jpg
+Description: A polished salon interior with mirrors, styling stations, and a welcoming visual atmosphere.
+People: Unverified
+Setting: Indoor beauty salon interior
+Mood: Welcoming, polished, professional
+Suggested pages: Home hero, About highlights
+Alt text: Elegant salon interior with styling mirrors and a warm professional ambiance.
 
-## Image 7 - Facial and Spa Treatment
-File path: knowledge-files/assets/images/facial_spa_treatment.jpg
-Description: A wellness-focused treatment setting where spa services feel calm, restorative, and high touch.
-People: Three people, two therapists and one client
-Setting: Bright spa treatment room
-Mood: Peaceful, indulgent, restorative
-Suggested pages: Packages page, Home page
-Alt text: Client receiving a relaxing spa treatment in a bright treatment room.
+## Image 7 - Salon Tools and Workspace
+File path: knowledge-files/assets/images/salon_tools_optimized.avif
+Description: A neatly arranged styling workstation with tools and products prepared for service.
+People: Unverified
+Setting: Indoor salon workstation
+Mood: Organised, professional, prepared
+Suggested pages: Services section, Home highlights
+Alt text: Salon styling tools and products arranged neatly on a workstation.
 
 ## Image 8 - Website Logo
 File path: knowledge-files/assets/images/website_logo.png
-Description: Bella's Beauty Salon logo for brand identification in shared navigation and footer.
+Description: Primary brand logo used for site identity in shared navigation and footer components.
 People: None
 Setting: Digital brand asset
-Mood: Clean, professional, recognisable
+Mood: Clean, recognisable, professional
 Suggested pages: Site header, site footer
-Alt text: Bella's Beauty Salon logo.
+Alt text: Beauty salon brand logo used for website identity.

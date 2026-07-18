@@ -27,13 +27,13 @@ CONTENT INVENTORY:
 
 Image Assignment Map
 --------------------
-- Home hero -> salon_interior_hero.jpg: Warm, polished salon setting fits the strongest first impression.
-- Services hero -> hair_colouring.avif with hair_colouring.jpg fallback: Skilled service image reinforces colour expertise and active treatment.
-- About feature -> salon_tools.avif: Organised workstation supports professionalism, product quality, and craft.
+- Home hero -> salon_interior_hero_optimized.jpg: Warm, polished salon setting fits the strongest first impression.
+- Services hero -> hair_colouring_optimized.avif with hair_colouring_optimized.jpg fallback: Skilled service image reinforces colour expertise and active treatment.
+- About feature -> salon_tools_optimized.avif: Organised workstation supports professionalism, product quality, and craft.
 - Packages hero -> facial_spa_treatment.jpg: Calm, restorative mood matches bundle and pamper messaging.
 - Visit hero -> backwash_area.jpg: Clean interior supports comfort, arrival confidence, and service environment.
-- Unassigned -> hair_colouring.jpg: Held as fallback for AVIF delivery only.
-- Unassigned -> nail_treatment.avif: Good fit, but not required once pages had stronger unique assignments.
+- Unassigned -> hair_colouring_optimized.jpg: Held as fallback for AVIF delivery only.
+- Unassigned -> nail_treatment_optimized.avif: Good fit, but not required once pages had stronger unique assignments.
 - Unassigned -> website_logo.png: Brand asset left unused because the shared header/footer use a text logo.
 
 Design Token Set
@@ -76,7 +76,7 @@ Total pages: 5
    Nav label: Home
    Sections: Hero, stats, service highlights, salon intro, packages teaser, booking CTA
    Primary CTA: Book Now
-   Images: salon_interior_hero.jpg -> Hero
+   Images: salon_interior_hero_optimized.jpg -> Hero
    Links to: services.html, about.html, packages.html, visit.html
 
 2. SERVICES
@@ -85,7 +85,7 @@ Total pages: 5
    Nav label: Services
    Sections: Hero, services grid, product brands marquee, booking policies, CTA banner
    Primary CTA: Book a Service
-   Images: hair_colouring.avif -> Hero
+   Images: hair_colouring_optimized.avif -> Hero
    Links to: visit.html, packages.html
 
 3. ABOUT
@@ -94,7 +94,7 @@ Total pages: 5
    Nav label: About
    Sections: Hero, salon story, team grid, training and products, CTA banner
    Primary CTA: Meet the Team and Book
-   Images: salon_tools.avif -> Salon story
+   Images: salon_tools_optimized.avif -> Salon story
    Links to: services.html, visit.html
 
 4. PACKAGES

@@ -33,6 +33,18 @@ Scan all image files in that folder and generate the metadata file using the sch
 List all images found and flag any entries that need human review.
 ```
 
+### Sync New Images Into Metadata
+```
+Re-scan knowledge-files/assets/images/ and reconcile with knowledge-files/assets/images/image-metadata.txt.
+Detect only newly added image files that are not already represented in metadata.
+For each new file, follow skills/image-analyst.md Step 1 reconciliation rules:
+- If not optimized, create <original_stem>_optimized<original_ext> using .github/tools/optimize_images.py.
+- Update metadata to reference the optimized filename in File path.
+- If an optimized sibling already exists and is in metadata, skip re-processing the original.
+Do not reprocess or re-optimize previously tracked files.
+Return a summary of added, skipped, and updated metadata entries.
+```
+
 ### Review Image Assignments
 ```
 Show me the Image Assignment Map for the current build.

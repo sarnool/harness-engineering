@@ -31,9 +31,16 @@ Load `skills/content-analyst.md`. Read all files in `knowledge-files/`. Produce 
 
 ### Stage 2a — Image Intelligence
 Load `skills/image-analyst.md`.
-- Check if `knowledge-files/assets/images/image-metadata.txt` exists.
-  - **If YES:** Read the metadata file. Extract file paths, descriptions, moods, and suggested pages for each image.
-  - **If NO:** Scan all files in `knowledge-files/assets/images/`. For each image, infer description, mood, people, setting, and suggested pages from the filename and content context. Write a new `image-metadata.txt` to that folder using the standard schema defined in `skills/image-analyst.md`. Confirm to the user that the metadata file has been created before proceeding.
+- Always re-scan `knowledge-files/assets/images/` and reconcile with `knowledge-files/assets/images/image-metadata.txt`.
+  - **If metadata exists:** parse it, detect new image files missing from metadata, and append entries for new images.
+  - **If metadata does not exist:** scan all images and create metadata using the schema in `skills/image-analyst.md`.
+- For each newly detected image file:
+  - If a sibling `<original_stem>_optimized<original_ext>` exists and that optimized file is in metadata, treat the original as already handled and skip it.
+  - Check whether it is already optimized.
+  - If not optimized, create one optimized file named `<original_stem>_optimized<original_ext>` in the same folder.
+  - Update metadata to reference the optimized filename in `File path` for that new image.
+  - Do not add the unoptimized original file to metadata when an optimized sibling exists.
+  - Do not bulk-optimize existing images already tracked in metadata.
 - Produce an **Image Assignment Map**: a list of which images will be used in which sections and why.
 
 ### Stage 2b — Brand Inference
